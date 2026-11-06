@@ -7,6 +7,8 @@ import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
+import { Reveal } from "@/components/Reveal";
+import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
 import { blogPosts, blogPublished, formatDate, postUrl, type BlogPost } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -88,34 +90,52 @@ export default function BlogPage() {
       </ScrollZoomHero>
 
       <section aria-labelledby="latest" className="bg-ink">
-        <div className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
-          <h2 id="latest" className="reveal mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">
+        <Reveal variant="zoom" className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
+          <Reveal as="h2" id="latest" variant="blur" delay={100} className="mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">
             Latest posts
-          </h2>
+          </Reveal>
 
-          <Link
-            href={postUrl(featured.slug)}
-            className="card-lift reveal group mb-5 grid gap-6 rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/[0.12] to-transparent p-7 hover:border-gold/70 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end"
-          >
-            <span>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Featured · {featured.category}</span>
-              <span className="mt-4 block font-display text-4xl font-bold leading-tight text-cream sm:text-5xl">{featured.title}</span>
-              <span className="mt-4 block max-w-2xl text-lg leading-relaxed">{featured.excerpt}</span>
-              <span className="mt-6 block">
-                <PostMeta post={featured} />
+          <Reveal variant="up" delay={180}>
+            <Link
+              href={postUrl(featured.slug)}
+              className="card-lift group mb-5 grid gap-6 rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/[0.12] to-transparent p-7 hover:border-gold/70 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end"
+            >
+              <span>
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">Featured · {featured.category}</span>
+                <span className="mt-4 block font-display text-4xl font-bold leading-tight text-cream sm:text-5xl">{featured.title}</span>
+                <span className="mt-4 block max-w-2xl text-lg leading-relaxed">{featured.excerpt}</span>
+                <span className="mt-6 block">
+                  <PostMeta post={featured} />
+                </span>
               </span>
-            </span>
-            <span className="font-bold text-gold" aria-hidden="true">
-              Read the post <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-            </span>
-          </Link>
+              <span className="font-bold text-gold" aria-hidden="true">
+                Read the post <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+              </span>
+            </Link>
+          </Reveal>
 
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((post, i) => (
-              <PostCard key={post.slug} post={post} index={i} />
+              <Reveal as="li" key={post.slug} variant="up" delay={240 + (i % 3) * 80}>
+                <Link
+                  href={postUrl(post.slug)}
+                  className="card-lift group flex h-full flex-col rounded-2xl border border-gold/20 bg-gradient-to-b from-white/[0.05] to-transparent p-7 hover:border-gold/70"
+                >
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">{post.category}</span>
+                  <span className="mt-3 font-display text-3xl font-bold leading-tight text-cream">{post.title}</span>
+                  <span className="mt-3 flex-1 leading-relaxed">{post.excerpt}</span>
+                  <span className="mt-6 flex items-center justify-between">
+                    <PostMeta post={post} />
+                    <span className="font-bold text-gold" aria-hidden="true">
+                      Read{" "}
+                      <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                    </span>
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </section>
 
       <section id="post-a-blog" aria-labelledby="post-heading" className="relative isolate overflow-clip bg-charcoal">
@@ -141,16 +161,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <section className="relative isolate overflow-clip" aria-labelledby="blog-download">
-        <PatternBackground />
-        <div className="section-y reveal mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-6">
-          <h2 id="blog-download" className="font-display text-4xl font-bold uppercase leading-tight text-gold sm:text-5xl">
-            Ready to find your next favorite spot?
-          </h2>
-          <p className="mt-6 text-lg">Download Tallee and search “Tallee Knows” in your app store.</p>
-          <StoreButtons className="mt-10" />
-        </div>
-      </section>
+      <ReadyToFindBanner id="blog-download" />
     </>
   );
 }

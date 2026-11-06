@@ -6,6 +6,7 @@ import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
+import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
 import { blogPosts, blogPublished, findPost, formatDate, postUrl } from "@/lib/blog";
 
 // Every post is prerendered, and unknown slugs return a real 404 (see the SEO pages).
@@ -102,16 +103,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         </div>
       </section>
 
-      <section className="relative isolate overflow-clip" aria-labelledby="post-download">
-        <PatternBackground />
-        <div className="section-y mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-6">
-          <h2 id="post-download" className="font-display text-4xl font-bold uppercase leading-tight text-gold sm:text-5xl">
-            Ready to find your next favorite spot?
-          </h2>
-          <p className="mt-6 text-lg">Download Tallee and search “Tallee Knows” in your app store.</p>
-          <StoreButtons className="mt-10" />
-        </div>
-      </section>
+      <ReadyToFindBanner id="post-download" />
     </>
   );
 }

@@ -7,6 +7,7 @@ import { PhoneRow, PhoneShot } from "@/components/PhoneShot";
 import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
+import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
 import { VibeMarquee } from "@/components/VibeMarquee";
 import type { Related, SeoPage } from "@/lib/seo-content";
 import { appScreens } from "@/lib/site";
@@ -227,20 +228,7 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
       )}
 
       {/* DOWNLOAD */}
-      <section aria-labelledby="download" className="relative isolate overflow-clip">
-        <PatternBackground />
-        <div
-          aria-hidden="true"
-          className="glow-pulse absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(223,179,96,0.16),transparent_65%)]"
-        />
-        <div className="section-y reveal mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-6">
-          <h2 id="download" className="font-display text-4xl font-bold uppercase leading-tight text-gold sm:text-5xl">
-            Ready to find your next favorite spot?
-          </h2>
-          <p className="mt-6 text-lg">Download Tallee and search “Tallee Knows” in your app store.</p>
-          <StoreButtons className="mt-10" />
-        </div>
-      </section>
+      <ReadyToFindBanner id="download" />
     </>
   );
 }

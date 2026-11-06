@@ -5,6 +5,8 @@ import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
+import { Reveal } from "@/components/Reveal";
+import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
 
 export type HubItem = { href: string; kind: string; name: string; text: string };
 export type HubGroup = { title?: string; items: HubItem[] };
@@ -49,13 +51,15 @@ export function HubPage({ eyebrow, h1, intro, groups, path }: { eyebrow: string;
 
       {groups.map((g, gi) => (
         <section key={g.title ?? gi} aria-label={g.title ?? eyebrow} className="bg-ink">
-          <div className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
+          <Reveal variant="zoom" className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
             {g.title && (
-              <h2 className="reveal mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">{g.title}</h2>
+              <Reveal as="h2" variant="blur" delay={100} className="mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">
+                {g.title}
+              </Reveal>
             )}
             <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {g.items.map((item, i) => (
-                <li key={item.href} className="reveal-i" style={step(i % 3)}>
+                <Reveal as="li" key={item.href} variant="up" delay={120 + (i % 3) * 80}>
                   <Link
                     href={item.href}
                     className="card-lift group flex h-full flex-col rounded-2xl border border-gold/20 bg-gradient-to-b from-white/[0.05] to-transparent p-7 hover:border-gold/70"
@@ -70,23 +74,14 @@ export function HubPage({ eyebrow, h1, intro, groups, path }: { eyebrow: string;
                       </span>
                     </span>
                   </Link>
-                </li>
+                </Reveal>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </section>
       ))}
 
-      <section className="relative isolate overflow-clip" aria-labelledby="hub-download">
-        <PatternBackground />
-        <div className="section-y reveal mx-auto flex max-w-4xl flex-col items-center px-5 text-center sm:px-6">
-          <h2 id="hub-download" className="font-display text-4xl font-bold uppercase leading-tight text-gold sm:text-5xl">
-            Ready to find your next favorite spot?
-          </h2>
-          <p className="mt-6 text-lg">Download Tallee and search “Tallee Knows” in your app store.</p>
-          <StoreButtons className="mt-10" />
-        </div>
-      </section>
+      <ReadyToFindBanner id="hub-download" />
     </>
   );
 }
