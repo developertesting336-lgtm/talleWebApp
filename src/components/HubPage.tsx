@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
+import { ScrollZoomHero } from "@/components/ScrollZoomHero";
+import { HeroEmblem } from "@/components/HeroEmblem";
 
 export type HubItem = { href: string; kind: string; name: string; text: string };
 export type HubGroup = { title?: string; items: HubItem[] };
@@ -13,28 +15,37 @@ const step = (n: number, name: "--i" | "--d" = "--i") => ({ [name]: n }) as CSSP
 export function HubPage({ eyebrow, h1, intro, groups, path }: { eyebrow: string; h1: string; intro: string; groups: HubGroup[]; path: string }) {
   return (
     <>
-      <section className="relative isolate overflow-clip">
-        <PatternBackground />
-        <div
-          aria-hidden="true"
-          className="glow-pulse absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(223,179,96,0.18),transparent_62%)]"
-        />
-        <div className="mx-auto flex max-w-4xl flex-col items-center px-5 pb-16 pt-10 text-center sm:px-6 sm:pb-20 sm:pt-12 lg:pb-24">
-          <div className="hero-in flex justify-center">
-            <Breadcrumbs items={[{ name: eyebrow }]} path={path} />
-          </div>
-          <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">{eyebrow}</p>
-          <h1
-            className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl"
-            style={step(1, "--d")}
-          >
-            {h1}
-          </h1>
-          <p className="hero-in mt-8 max-w-2xl text-lg leading-relaxed" style={step(2, "--d")}>
-            {intro}
-          </p>
+      <ScrollZoomHero
+        compact
+        background={<PatternBackground />}
+        emblem={<HeroEmblem />}
+        contentClassName="max-w-4xl"
+      >
+        <div className="hero-in flex justify-center">
+          <Breadcrumbs items={[{ name: eyebrow }]} path={path} />
         </div>
-      </section>
+        <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">{eyebrow}</p>
+        <h1
+          className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl"
+          style={step(1, "--d")}
+        >
+          {h1}
+        </h1>
+        <div
+          className="hero-in relative mt-8 max-w-2xl px-8 py-6 sm:px-10 text-lg leading-relaxed text-[#F6EFDF]"
+          style={{
+            ...step(2, "--d"),
+            textShadow: "0 1px 3px rgba(0, 0, 0, 1)",
+          }}
+        >
+          {/* Feathered dark text scrim vignette */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[16px] bg-[rgba(0,0,0,0.67)] blur-[10px]"
+          />
+          <p>{intro}</p>
+        </div>
+      </ScrollZoomHero>
 
       {groups.map((g, gi) => (
         <section key={g.title ?? gi} aria-label={g.title ?? eyebrow} className="bg-ink">

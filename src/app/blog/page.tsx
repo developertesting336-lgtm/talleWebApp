@@ -5,6 +5,8 @@ import { BlogComposer } from "@/components/BlogComposer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
+import { ScrollZoomHero } from "@/components/ScrollZoomHero";
+import { HeroEmblem } from "@/components/HeroEmblem";
 import { blogPosts, blogPublished, formatDate, postUrl, type BlogPost } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -52,27 +54,38 @@ export default function BlogPage() {
 
   return (
     <>
-      <section className="relative isolate overflow-clip">
-        <PatternBackground />
+      <ScrollZoomHero
+        compact
+        background={<PatternBackground />}
+        emblem={<HeroEmblem />}
+        contentClassName="max-w-4xl"
+      >
+        <div className="hero-in flex justify-center">
+          <Breadcrumbs items={[{ name: "Blog" }]} path="/blog" />
+        </div>
+        <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
+          The Tallee Blog
+        </p>
+        <h1 className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl" style={{ "--d": 1 } as CSSProperties}>
+          Ideas for your next night out
+        </h1>
         <div
-          aria-hidden="true"
-          className="glow-pulse absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(223,179,96,0.18),transparent_62%)]"
-        />
-        <div className="mx-auto flex max-w-4xl flex-col items-center px-5 pb-16 pt-10 text-center sm:px-6 sm:pb-20 sm:pt-12 lg:pb-24">
-          <div className="hero-in flex justify-center">
-            <Breadcrumbs items={[{ name: "Blog" }]} path="/blog" />
-          </div>
-          <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
-            The Tallee Blog
-          </p>
-          <h1 className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl" style={{ "--d": 1 } as CSSProperties}>
-            Ideas for your next night out
-          </h1>
-          <p className="hero-in mt-8 max-w-2xl text-lg leading-relaxed" style={{ "--d": 2 } as CSSProperties}>
+          className="hero-in relative mt-8 max-w-2xl px-8 py-6 sm:px-10 text-lg leading-relaxed text-[#F6EFDF]"
+          style={{
+            "--d": 2,
+            textShadow: "0 1px 3px rgba(0, 0, 0, 1)",
+          } as CSSProperties}
+        >
+          {/* Feathered dark text scrim vignette */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[16px] bg-[rgba(0,0,0,0.67)] blur-[10px]"
+          />
+          <p>
             Guides, tips and news from the team behind Tallee. These are sample posts while the blog is being set up.
           </p>
         </div>
-      </section>
+      </ScrollZoomHero>
 
       <section aria-labelledby="latest" className="bg-ink">
         <div className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">

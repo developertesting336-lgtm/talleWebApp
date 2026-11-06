@@ -5,6 +5,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { PatternBackground } from "@/components/PatternBackground";
 import { PhoneRow, PhoneShot } from "@/components/PhoneShot";
 import { StoreButtons } from "@/components/StoreButtons";
+import { ScrollZoomHero } from "@/components/ScrollZoomHero";
+import { HeroEmblem } from "@/components/HeroEmblem";
 import { VibeMarquee } from "@/components/VibeMarquee";
 import type { Related, SeoPage } from "@/lib/seo-content";
 import { appScreens } from "@/lib/site";
@@ -50,42 +52,53 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
       <JsonLd data={jsonLd} />
 
       {/* HERO */}
-      <section className="relative isolate overflow-clip">
-        <PatternBackground />
-        <div
-          aria-hidden="true"
-          className="glow-pulse absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(223,179,96,0.18),transparent_62%)]"
-        />
-        <div className="mx-auto flex max-w-4xl flex-col items-center px-5 pb-16 pt-10 text-center sm:px-6 sm:pb-20 sm:pt-12 lg:pb-24">
-          <div className="hero-in flex justify-center" style={step(0, "--d")}>
-            <Breadcrumbs items={crumbs} path={path} className="text-center" />
-          </div>
+      <ScrollZoomHero
+        compact
+        background={<PatternBackground />}
+        emblem={<HeroEmblem />}
+        contentClassName="max-w-4xl"
+      >
+        <div className="hero-in flex justify-center" style={step(0, "--d")}>
+          <Breadcrumbs items={crumbs} path={path} className="text-center" />
+        </div>
 
-          <p
-            className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold"
-            style={step(1, "--d")}
-          >
-            {page.eyebrow}
-          </p>
-          <h1
-            className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl"
-            style={step(2, "--d")}
-          >
-            {page.h1}
-          </h1>
-          <div className="hero-in mt-8 max-w-2xl space-y-4 text-lg leading-relaxed" style={step(3, "--d")}>
+        <p
+          className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold"
+          style={step(1, "--d")}
+        >
+          {page.eyebrow}
+        </p>
+        <h1
+          className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl"
+          style={step(2, "--d")}
+        >
+          {page.h1}
+        </h1>
+        <div
+          className="hero-in relative mt-8 max-w-2xl px-8 py-6 sm:px-10 text-lg leading-relaxed text-[#F6EFDF]"
+          style={{
+            ...step(3, "--d"),
+            textShadow: "0 1px 3px rgba(0, 0, 0, 1)",
+          }}
+        >
+          {/* Feathered dark text scrim vignette */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[16px] bg-[rgba(0,0,0,0.67)] blur-[10px]"
+          />
+          <div className="space-y-4">
             {page.intro.map((p) => (
               <p key={p}>{p}</p>
             ))}
           </div>
-          <div className="hero-in" style={step(4, "--d")}>
-            <StoreButtons className="mt-10" />
-          </div>
-          <p className="hero-in mt-5 text-sm text-cream/70" style={step(5, "--d")}>
-            Free to download on iOS and Android
-          </p>
         </div>
-      </section>
+        <div className="hero-in" style={step(4, "--d")}>
+          <StoreButtons className="mt-10" />
+        </div>
+        <p className="hero-in mt-5 text-sm text-cream/70" style={step(5, "--d")}>
+          Free to download on iOS and Android
+        </p>
+      </ScrollZoomHero>
 
       <VibeMarquee />
 

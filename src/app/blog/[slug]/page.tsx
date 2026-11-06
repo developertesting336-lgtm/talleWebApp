@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
+import { ScrollZoomHero } from "@/components/ScrollZoomHero";
+import { HeroEmblem } from "@/components/HeroEmblem";
 import { blogPosts, blogPublished, findPost, formatDate, postUrl } from "@/lib/blog";
 
 // Every post is prerendered, and unknown slugs return a real 404 (see the SEO pages).
@@ -33,19 +35,33 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
 
   return (
     <>
-      <section className="relative isolate overflow-clip">
-        <PatternBackground />
-        <div className="mx-auto flex max-w-3xl flex-col items-center px-5 pb-16 pt-10 text-center sm:px-6 sm:pb-20 sm:pt-12 lg:pb-24">
+      <ScrollZoomHero
+        compact
+        background={<PatternBackground />}
+        emblem={<HeroEmblem />}
+        contentClassName="max-w-3xl"
+      >
+        <div className="hero-in flex justify-center">
           <Breadcrumbs items={[{ name: "Blog", href: "/blog" }, { name: post.title }]} path={postUrl(slug)} className="text-center" />
-          <p className="mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
-            {post.category}
-          </p>
-          <h1 className="mt-6 font-display text-[2.4rem] font-bold leading-[1.05] text-gold sm:text-6xl">{post.title}</h1>
-          <p className="mt-6 text-sm text-cream/70">
+        </div>
+        <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
+          {post.category}
+        </p>
+        <h1 className="hero-in mt-6 font-display text-[2.4rem] font-bold leading-[1.05] text-gold sm:text-6xl">{post.title}</h1>
+        <div
+          className="hero-in relative mt-6 max-w-xl px-6 py-3 text-sm text-[#F6EFDF]"
+          style={{ textShadow: "0 1px 3px rgba(0, 0, 0, 1)" }}
+        >
+          {/* Feathered dark text scrim vignette */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[12px] bg-[rgba(0,0,0,0.67)] blur-[8px]"
+          />
+          <p>
             By {post.author} · {formatDate(post.date)} · {post.readMinutes} min read
           </p>
         </div>
-      </section>
+      </ScrollZoomHero>
 
       <article className="section-y mx-auto max-w-3xl px-5 sm:px-6">
         <p className="mb-10 rounded-lg border border-gold/40 bg-gold/10 px-4 py-3 text-sm">
