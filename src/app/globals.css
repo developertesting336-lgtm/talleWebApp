@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #000000;
+  --color-charcoal: #242424;
+  --color-gold: #dfb360;
+  --color-cream: #fdfcf9;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* keeps #about and #help targets clear of the sticky header */
+  scroll-padding-top: 130px;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+/*
+ * Long-form text on the legal pages. Values below were measured on the live
+ * Wix pages: all text is white, body is 16px/24px weight 400, h1 and the
+ * Terms h3 are bold, the h2 is regular. Mobile sizes match Wix; the md+
+ * sizes are the original desktop sizes.
+ */
+.prose-tallee { color: #fff; font-weight: 400; }
+.prose-tallee h1,
+.prose-tallee h2,
+.prose-tallee h3 {
+  font-family: var(--font-display);
+  color: #fff;
+}
+.prose-tallee h1 { font-size: 1.75rem; line-height: 1; font-weight: 700; margin-bottom: 1.25rem; }
+.prose-tallee h2 { font-size: 1.1875rem; line-height: 1.4; font-weight: 400; margin: 1.5rem 0 0.5rem; }
+.prose-tallee h3 { font-size: 1.1875rem; line-height: 1.2; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+/* Terms page: smaller title, as on Wix */
+.prose-tallee[data-title="sm"] h1 { font-size: 1.25rem; line-height: 1.1; }
+.prose-tallee p { margin: 0.75rem 0; line-height: 1.5; }
+.prose-tallee ul,
+.prose-tallee ol { margin: 0.75rem 0 0.75rem 1.8rem; line-height: 1.5; }
+.prose-tallee ul { list-style: disc; }
+.prose-tallee ol { list-style: decimal; }
+.prose-tallee a { color: #fff; text-decoration: underline; }
+
+@media (min-width: 48rem) {
+  .prose-tallee h1 { font-size: 2.75rem; line-height: 1.15; margin-bottom: 1.5rem; }
+  .prose-tallee h2 { font-size: 1.9rem; line-height: 1.15; margin: 2.25rem 0 0.75rem; }
+  .prose-tallee h3 { font-size: 1.45rem; line-height: 1.15; margin: 1.75rem 0 0.5rem; }
+  .prose-tallee[data-title="sm"] h1 { font-size: 2.75rem; line-height: 1.15; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* Header height; the pinned How It Works section starts below it */
+:root { --header-h: 120px; }
+
+/*
+ * One vertical rhythm for every content section on every page, so the space
+ * above and below the content is the same everywhere.
+ */
+.section-y { padding-block: 4rem; }
+@media (min-width: 40rem) { .section-y { padding-block: 5rem; } }
+@media (min-width: 64rem) { .section-y { padding-block: 6rem; } }
+
+/*
+ * Motion. Everything is CSS-only and wrapped in prefers-reduced-motion, so
+ * people who ask for less motion (and crawlers) get fully visible, static
+ * content. Scroll-driven effects sit behind @supports and simply do not run in
+ * browsers without them; nothing is hidden by default.
+ *
+ * Do not put .reveal on elements inside a horizontal scroller (the phone
+ * rows): their scroll timeline would be the scroller, not the page.
+ */
+.scroll-progress { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-up {
+    from { opacity: 0; transform: translate3d(0, 28px, 0); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.88); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pattern-drift {
+    from { transform: scale(1.06) translate3d(0, 0, 0); }
+    to { transform: scale(1.16) translate3d(-2.5%, -2%, 0); }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -9px, 0); }
+  }
+  @keyframes marquee {
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+  @keyframes line-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes header-line {
+    to { box-shadow: 0 1px 0 rgba(223, 179, 96, 0.4), 0 10px 30px -12px rgba(0, 0, 0, 0.9); }
+  }
+
+  /* Hero entrance on page load. --d is the step in the sequence. */
+  .hero-in {
+    animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--d, 0) * 110ms);
+  }
+  .pattern-drift { animation: pattern-drift 45s ease-in-out infinite alternate; will-change: transform; }
+  .glow-pulse { animation: glow-pulse 7s ease-in-out infinite; }
+  .float { animation: float 7s ease-in-out infinite; will-change: transform; }
+  .float:nth-child(even) { animation-delay: -3.5s; }
+
+  .marquee-track { animation: marquee 55s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+
+  /* Lift on hover for cards. */
+  .card-lift {
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.4s, background-color 0.4s;
+  }
+  .card-lift:hover {
+    transform: translate3d(0, -6px, 0);
+    box-shadow: 0 22px 44px -22px rgba(223, 179, 96, 0.45);
+  }
+
+  /* Smooth FAQ open and close (progressive: Chromium and Safari). */
+  @supports (interpolate-size: allow-keywords) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition: block-size 0.4s ease, content-visibility 0.4s allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; }
+  }
+
+  /* Scroll-driven effects. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+    /* --i staggers items in a grid or list */
+    .reveal-i {
+      animation: fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 7%) entry calc(38% + var(--i, 0) * 7%);
+    }
+    .reveal-pop {
+      animation: pop-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+    .line-grow {
+      animation: line-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 70%;
+    }
+  }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      transform-origin: left;
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+    .header-line {
+      animation: header-line linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 140px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
