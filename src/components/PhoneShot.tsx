@@ -43,24 +43,71 @@ export function PhoneShot({ screen, compact = false }: { screen: Screen; compact
 //   );
 // }
 
-// A short silent screen recording in the same frame. It has controls and never
-// autoplays; the poster is the first frame. The frame adapts to whatever
-// size/aspect ratio the video has.
-// The video and its poster share one crop (540x1092), and the box has that fixed ratio, so
-// the frame never changes size between the poster, loading and playing.
-export function PhoneVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
+// A short screen recording in an authentic smartphone frame.
+// Adjusted for the 9:16 video (1080x1920) with padded bezel frame and realistic chassis.
+// export function PhoneVideo({
+//   src,
+//   poster,
+//   label,
+//   className = "",
+// }: {
+//   src: string;
+//   poster?: string;
+//   label: string;
+//   className?: string;
+// }) {
+//   return (
+//     <div
+//       className={`mx-auto w-fit max-w-full rounded-[2.5rem] border border-gold/40 bg-gradient-to-b from-[#222222] via-[#161616] to-[#0e0e0e] p-3.5 sm:p-4.5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_24px_rgba(223,179,96,0.18)] ring-1 ring-white/10 ${className}`}
+//     >
+//       {/* Speaker Bar at Top of Bezel */}
+//       <div
+//         aria-hidden="true"
+//         className="mx-auto mb-3 h-1 w-14 rounded-full bg-white/20"
+//       />
+//       <div className="overflow-hidden rounded-[1.75rem] bg-black">
+//         <video
+//           src={src}
+//           poster={poster}
+//           controls
+//           muted
+//           playsInline
+//           preload="metadata"
+//           aria-label={label}
+//           className="block aspect-[9/16] h-[min(68svh,620px)] w-auto max-w-full rounded-[1.75rem] bg-black object-cover"
+//         />
+//       </div>
+//     </div>
+//   );
+// }
+
+export function PhoneVideo({
+  src,
+  poster,
+  label,
+  className = "",
+}: {
+  src: string;
+  poster?: string;
+  label: string;
+  className?: string;
+}) {
   return (
-    <div className="mx-auto w-fit max-w-full rounded-[2rem] border border-gold/40 bg-charcoal p-1.5">
-      <video
-        src={src}
-        poster={poster}
-        controls
-        muted
-        playsInline
-        preload="metadata"
-        aria-label={label}
-        className="block aspect-[540/1092] h-[min(70svh,640px)] w-auto max-w-full rounded-[1.6rem] bg-black object-cover"
-      />
+    <div
+      className={`mx-auto w-fit max-w-full rounded-[1.5rem] border border-gold/40 bg-black p-1 ${className}`}
+    >
+      <div className="overflow-hidden rounded-[1.25rem]">
+        <video
+          src={src}
+          poster={poster}
+          controls
+          muted
+          playsInline
+          preload="metadata"
+          aria-label={label}
+          className="block h-auto max-h-[min(68svh,620px)] w-auto max-w-full"
+        />
+      </div>
     </div>
   );
 }
