@@ -43,32 +43,24 @@ export function PhoneShot({ screen, compact = false }: { screen: Screen; compact
 //   );
 // }
 
-// A short silent screen recording in a phone-style frame. It has controls and
-// plays inline. The frame is locked to standard 9:16 aspect ratio (1080x1920),
-// perfectly matching the demo recording, and uses hardware-stabilized width
-// so it never causes layout shifts or jitter on mobile scroll.
-export function PhoneVideo({ src, poster, label }: { src: string; poster?: string; label: string }) {
+// A short silent screen recording in the same frame. It has controls and never
+// autoplays; the poster is the first frame. The frame adapts to whatever
+// size/aspect ratio the video has.
+// The video and its poster share one crop (540x1092), and the box has that fixed ratio, so
+// the frame never changes size between the poster, loading and playing.
+export function PhoneVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
   return (
-    <div className="relative mx-auto w-[270px] xs:w-[295px] sm:w-[320px] md:w-[340px] max-w-[88vw] rounded-[2.4rem] sm:rounded-[2.75rem] border-2 border-gold/45 bg-[#151515] p-2 sm:p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(223,179,96,0.18)] [transform:translateZ(0)] [backface-visibility:hidden]">
-      {/* Dynamic island / speaker pill */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-3 sm:top-3.5 z-20 h-3 w-16 sm:h-3.5 sm:w-20 -translate-x-1/2 rounded-full border border-white/10 bg-black/90 shadow-sm"
+    <div className="mx-auto w-fit max-w-full rounded-[2rem] border border-gold/40 bg-charcoal p-1.5">
+      <video
+        src={src}
+        poster={poster}
+        controls
+        muted
+        playsInline
+        preload="metadata"
+        aria-label={label}
+        className="block aspect-[540/1092] h-[min(70svh,640px)] w-auto max-w-full rounded-[1.6rem] bg-black object-cover"
       />
-
-      {/* Screen container locked strictly to 9:16 */}
-      <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.8rem] sm:rounded-[2.1rem] bg-black shadow-inner [transform:translateZ(0)]">
-        <video
-          src={src}
-          poster={poster}
-          controls
-          muted
-          playsInline
-          preload="metadata"
-          aria-label={label}
-          className="relative z-10 block h-full w-full rounded-[1.8rem] sm:rounded-[2.1rem] bg-black object-cover [transform:translateZ(0)]"
-        />
-      </div>
     </div>
   );
 }
