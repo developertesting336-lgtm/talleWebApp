@@ -265,7 +265,12 @@ export default function HowItWorksPage() {
         {/* DEMO VIDEO */}
         <section className="relative isolate overflow-clip bg-charcoal" aria-labelledby="demo">
           <div className="section-y mx-auto grid max-w-6xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:gap-16">
-            <FadeUp x={-40} y={0}>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
               <h2 id="demo" className="font-display text-4xl font-bold text-gold sm:text-5xl">
                 See it in action
               </h2>
@@ -281,8 +286,14 @@ export default function HowItWorksPage() {
                 Watch a real search from start to finish: pick who you’re with, the occasion and the vibe, tap Get My Picks, and
                 open a place to see the details.
               </p>
-            </FadeUp>
-            <FadeUp x={40} y={0} delay={0.15} className="min-w-0">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+              className="min-w-0"
+            >
               <DemoStage>
                 <PhoneVideo
                   src="/video/tallee-demo.mp4"
@@ -290,7 +301,7 @@ export default function HowItWorksPage() {
                   label="Screen recording of a Tallee search, from choosing filters to opening a video"
                 />
               </DemoStage>
-            </FadeUp>
+            </motion.div>
           </div>
         </section>
 

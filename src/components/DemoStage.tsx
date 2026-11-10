@@ -162,9 +162,9 @@ export function DemoStage({
           className="w-full flex justify-center"
         >
           <motion.div
-            animate={still ? { y: 0 } : { y: [0, -10, 0] }}
-            transition={still ? { duration: 0.3, ease: "easeOut" } : { duration: 5, ease: "easeInOut", repeat: Infinity }}
-            className="w-full flex justify-center"
+            animate={still || isMobile ? { y: 0 } : { y: [0, -10, 0] }}
+            transition={still || isMobile ? { duration: 0.3, ease: "easeOut" } : { duration: 5, ease: "easeInOut", repeat: Infinity }}
+            className="w-full flex justify-center [transform:translateZ(0)]"
           >
             {children}
           </motion.div>
