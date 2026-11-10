@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, useInView, useReducedMotion } from "motion/react";
+import { motion, useAnimation, useReducedMotion } from "motion/react";
 import { PatternBackground } from "@/components/PatternBackground";
 import { StoreButtons } from "@/components/StoreButtons";
 import { Reveal } from "@/components/Reveal";
@@ -17,33 +17,42 @@ export function ReadyToFindBanner({ id = "ready-download", className = "" }: Rea
   const prefersReduced = useReducedMotion();
   const reduce = !!prefersReduced;
 
-  const isSectionInView = useInView(sectionRef, {
-    once: false,
-    margin: "0px 0px -12% 0px",
-  });
-
   useEffect(() => {
-    if (reduce) {
-      controls.set({ opacity: 0.08, x: 0 });
+    const el = sectionRef.current;
+    if (!el || reduce) {
+      if (reduce) controls.set({ opacity: 0.08, x: 0 });
       return;
     }
 
-    if (isSectionInView) {
-      // Smoothly glide in from left behind the section at pure watermark opacity,
-      // glowing on entry and settling to original watermark opacity
-      controls.start({
-        x: ["-70vw", "0vw"],
-        opacity: [0, 0.14, 0.08],
-        transition: {
-          duration: 1.15,
-          ease: [0.16, 1, 0.3, 1],
-        },
-      });
-    } else {
-      // When scrolled out of view, reset offscreen so it glides in on next scroll
-      controls.set({ x: "-70vw", opacity: 0 });
-    }
-  }, [isSectionInView, controls, reduce]);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Downward scroll entry: glide watermark in from left
+          controls.start({
+            x: ["-70vw", "0vw"],
+            opacity: [0, 0.14, 0.08],
+            transition: {
+              duration: 1.15,
+              ease: [0.16, 1, 0.3, 1],
+            },
+          });
+        } else {
+          const rootBottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+          if (entry.boundingClientRect.top >= rootBottom) {
+            // User scrolled UP above this section: reset offscreen so it glides in again on downward scroll
+            controls.set({ x: "-70vw", opacity: 0 });
+          } else if (entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0) {
+            // User scrolled DOWN past this section: keep at original position so upward scroll has NO animation
+            controls.set({ x: "0vw", opacity: 0.08 });
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+    );
+    io.observe(el);
+
+    return () => io.disconnect();
+  }, [controls, reduce]);
 
   return (
     <section

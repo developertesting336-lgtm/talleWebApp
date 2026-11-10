@@ -8,6 +8,9 @@ import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
 import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
+import { Reveal } from "@/components/Reveal";
+import { ThreeStepsSection } from "@/components/ThreeStepsSection";
+import { TipsSection } from "@/components/TipsSection";
 import { VibeMarquee } from "@/components/VibeMarquee";
 import type { Related, SeoPage } from "@/lib/seo-content";
 import { appScreens } from "@/lib/site";
@@ -64,8 +67,11 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
         </div>
 
         <p
-          className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold"
-          style={step(1, "--d")}
+          className="hero-in mt-8 rounded-full border border-gold/40 bg-[rgba(0,0,0,0.67)] px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold shadow-[0_2px_12px_rgba(0,0,0,0.7)] backdrop-blur-sm"
+          style={{
+            ...step(1, "--d"),
+            textShadow: "0 1px 3px rgba(0, 0, 0, 1)",
+          }}
         >
           {page.eyebrow}
         </p>
@@ -109,73 +115,31 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
           <SectionTitle id="highlights">{page.highlightsTitle}</SectionTitle>
           <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {page.highlights.map((h, i) => (
-              <li key={h.title} className="reveal-i min-w-0" style={step(i)}>
+              <Reveal as="li" key={h.title} variant="card" delay={(i % 4) * 60} className="min-w-0">
                 <div className="card-lift h-full rounded-2xl border border-gold/20 bg-gradient-to-b from-white/[0.05] to-transparent p-7 hover:border-gold/60">
                   <span aria-hidden="true" className="block h-0.5 w-8 bg-gold" />
                   <h3 className="mt-5 break-words font-display text-2xl font-bold text-gold">{h.title}</h3>
                   <p className="mt-3 leading-relaxed">{h.text}</p>
                 </div>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </div>
       </section>
 
       {/* HOW TALLEE FINDS IT */}
-      <section aria-labelledby="how" className="bg-charcoal">
-        <div className="section-y mx-auto grid max-w-6xl items-center gap-14 px-5 sm:px-6 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <div className="reveal">
-              <p className="font-display text-lg font-bold uppercase tracking-[0.25em] text-gold">How Tallee works</p>
-              <h2 id="how" className="mt-2 font-display text-4xl font-bold text-cream sm:text-5xl">
-                Three steps to the right place
-              </h2>
-            </div>
-            <ol className="mt-10 space-y-8">
-              {steps(page.filterLine).map((s, i) => (
-                <li key={s.title} className="reveal-i flex gap-5" style={step(i)}>
-                  <span className="grid h-11 w-11 flex-none place-items-center rounded-full border border-gold bg-ink font-display text-xl font-bold text-gold">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="font-display text-2xl font-bold text-cream">{s.title}</h3>
-                    <p className="mt-2 leading-relaxed">{s.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <Link href="/how-it-works" className="mt-10 inline-block border-b border-gold pb-1 font-bold text-gold transition-colors hover:text-cream">
-              See how Tallee works →
-            </Link>
-          </div>
-          <div className="min-w-0">
-            <PhoneRow label={`Tallee app screens for ${page.name}`}>
-              <PhoneShot screen={appScreens[page.shots[0]]} />
-              <PhoneShot screen={appScreens[page.shots[1]]} />
-            </PhoneRow>
-          </div>
-        </div>
-      </section>
+      <ThreeStepsSection
+        stepsList={steps(page.filterLine)}
+        shots={[page.shots[0], page.shots[1]]}
+        screenLabel={`Tallee app screens for ${page.name}`}
+      />
 
       {/* TIPS */}
-      <section aria-labelledby="tips" className="bg-ink">
-        <div className="section-y mx-auto max-w-6xl px-5 sm:px-6">
-          <SectionTitle id="tips">{page.tipsTitle}</SectionTitle>
-          <ul className="mx-auto mt-14 grid max-w-4xl gap-x-12 gap-y-9 sm:grid-cols-2">
-            {page.tips.map((t, i) => (
-              <li key={t.title} className="reveal-i flex gap-4" style={step(i)}>
-                <svg viewBox="0 0 24 24" className="mt-1 h-6 w-6 flex-none text-gold" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M5 12.5l4.5 4.5L19 7.5" />
-                </svg>
-                <div>
-                  <h3 className="font-display text-2xl font-bold text-cream">{t.title}</h3>
-                  <p className="mt-2 leading-relaxed">{t.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <TipsSection
+        id="tips"
+        title={page.tipsTitle}
+        tips={page.tips}
+      />
 
       {/* FAQ */}
       <section aria-labelledby="faq" className="relative isolate overflow-clip">
@@ -207,7 +171,7 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
             <SectionTitle id="related">Keep exploring</SectionTitle>
             <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r, i) => (
-                <li key={r.href} className="reveal-i min-w-0" style={step(i)}>
+                <Reveal as="li" key={r.href} variant="card" delay={(i % 3) * 60} className="min-w-0">
                   <Link
                     href={r.href}
                     className="card-lift group flex h-full items-center justify-between gap-4 rounded-2xl border border-gold/20 p-6 hover:border-gold hover:bg-white/[0.04]"
@@ -220,7 +184,7 @@ export function SeoLanding({ page, path, crumbs, related }: { page: SeoPage; pat
                       →
                     </span>
                   </Link>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>

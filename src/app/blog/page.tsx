@@ -65,7 +65,10 @@ export default function BlogPage() {
         <div className="hero-in flex justify-center">
           <Breadcrumbs items={[{ name: "Blog" }]} path="/blog" />
         </div>
-        <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
+        <p
+          className="hero-in mt-8 rounded-full border border-gold/40 bg-[rgba(0,0,0,0.67)] px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold shadow-[0_2px_12px_rgba(0,0,0,0.7)] backdrop-blur-sm"
+          style={{ textShadow: "0 1px 3px rgba(0, 0, 0, 1)" }}
+        >
           The Tallee Blog
         </p>
         <h1 className="hero-in mt-6 font-display text-[2.5rem] font-bold uppercase leading-[1.05] text-gold sm:text-6xl lg:text-7xl" style={{ "--d": 1 } as CSSProperties}>
@@ -90,12 +93,12 @@ export default function BlogPage() {
       </ScrollZoomHero>
 
       <section aria-labelledby="latest" className="bg-ink">
-        <Reveal variant="zoom" className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
-          <Reveal as="h2" id="latest" variant="blur" delay={100} className="mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">
+        <div className="mx-auto max-w-6xl px-5 pb-16 pt-4 sm:px-6 sm:pb-20 lg:pb-24">
+          <Reveal as="h2" id="latest" variant="blur" delay={60} className="mb-10 border-b border-gold/30 pb-4 font-display text-3xl font-bold text-cream sm:text-4xl">
             Latest posts
           </Reveal>
 
-          <Reveal variant="up" delay={180}>
+          <Reveal variant="card" delay={80}>
             <Link
               href={postUrl(featured.slug)}
               className="card-lift group mb-5 grid gap-6 rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/[0.12] to-transparent p-7 hover:border-gold/70 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end"
@@ -116,7 +119,7 @@ export default function BlogPage() {
 
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((post, i) => (
-              <Reveal as="li" key={post.slug} variant="up" delay={240 + (i % 3) * 80}>
+              <Reveal as="li" key={post.slug} variant="card" delay={(i % 3) * 60}>
                 <Link
                   href={postUrl(post.slug)}
                   className="card-lift group flex h-full flex-col rounded-2xl border border-gold/20 bg-gradient-to-b from-white/[0.05] to-transparent p-7 hover:border-gold/70"
@@ -135,7 +138,7 @@ export default function BlogPage() {
               </Reveal>
             ))}
           </ul>
-        </Reveal>
+        </div>
       </section>
 
       <section id="post-a-blog" aria-labelledby="post-heading" className="relative isolate overflow-clip bg-charcoal">

@@ -7,6 +7,7 @@ import { StoreButtons } from "@/components/StoreButtons";
 import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
 import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
+import { Reveal } from "@/components/Reveal";
 import { blogPosts, blogPublished, findPost, formatDate, postUrl } from "@/lib/blog";
 
 // Every post is prerendered, and unknown slugs return a real 404 (see the SEO pages).
@@ -45,7 +46,10 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         <div className="hero-in flex justify-center">
           <Breadcrumbs items={[{ name: "Blog", href: "/blog" }, { name: post.title }]} path={postUrl(slug)} className="text-center" />
         </div>
-        <p className="hero-in mt-8 rounded-full border border-gold/40 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold">
+        <p
+          className="hero-in mt-8 rounded-full border border-gold/40 bg-[rgba(0,0,0,0.67)] px-5 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-gold shadow-[0_2px_12px_rgba(0,0,0,0.7)] backdrop-blur-sm"
+          style={{ textShadow: "0 1px 3px rgba(0, 0, 0, 1)" }}
+        >
           {post.category}
         </p>
         <h1 className="hero-in mt-6 font-display text-[2.4rem] font-bold leading-[1.05] text-gold sm:text-6xl">{post.title}</h1>
@@ -86,13 +90,13 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
             More from the blog
           </h2>
           <ul className="mt-8 grid gap-5 md:grid-cols-3">
-            {more.map((p) => (
-              <li key={p.slug}>
+            {more.map((p, i) => (
+              <Reveal as="li" key={p.slug} variant="card" delay={i * 60}>
                 <Link href={postUrl(p.slug)} className="card-lift flex h-full flex-col rounded-2xl border border-gold/20 p-6 hover:border-gold/70">
                   <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold">{p.category}</span>
                   <span className="mt-2 font-display text-2xl font-bold text-cream">{p.title}</span>
                 </Link>
-              </li>
+              </Reveal>
             ))}
           </ul>
           <p className="mt-8">
