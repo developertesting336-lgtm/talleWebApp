@@ -19,7 +19,7 @@ export type BlogPost = {
   sections: BlogSection[];
 };
 
-export const blogCategories = ["Date Night", "Brunch", "Lunch", "Party", "Nightlife", "Tips", "Tallee News"] as const;
+export const blogCategories = ["Date Night", "Brunch", "Nightlife", "Tips", "Tallee News"] as const;
 
 export const blogPosts: BlogPost[] = [
   {
