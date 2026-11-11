@@ -33,7 +33,7 @@ export type SeoPage = {
 
 const FREE_FAQ: Faq = {
   q: "Is Tallee free?",
-  a: "Yes. Tallee is free to download and use, with an optional Premium plan if you want unlimited searches.",
+  a: "Yes. Tallee is free to download and use, with an optional Premium plan for unlimited searches, voice search and talk back, and recommendations that learn you over time.",
 };
 
 // ---------------------------------------------------------------------------

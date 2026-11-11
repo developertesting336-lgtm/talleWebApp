@@ -27,6 +27,7 @@ const styles = {
 
 const defaultDifferentiators = [
   "Occasion-based suggestions — date night, celebrations, casual hangs, business meetups",
+  "Hidden gems, not just popular picks: Tallee doesn’t recommend a place just because it’s popular, so you can find great spots that don’t show up on every “top 10” list",
   "Vibe matching based on your mood and preferences",
   "Personalized picks that get better over time",
   "Memory mode, so your favorites and preferences stay saved",

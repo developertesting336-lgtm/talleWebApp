@@ -388,21 +388,17 @@ export default function WhoWeAre({ imageSrc }: WhoWeAreProps) {
 
             {/* Sub-tagline / Eyebrow */}
             <p aria-hidden="true" className={styles.eyebrow}>
-              A Smarter Way Out
+              A SMARTER WAY TO FIND WHAT FITS
             </p>
 
 
             {/* Preserved Main Editorial Copy */}
             <div className={styles.prose}>
               <p className={styles.paragraph}>
-                Tallee is an AI-powered venue recommendation app that makes it easier to choose
-                where to go. We turn “What should we do tonight?” into a confident plan by matching
-                you with venues that fit your occasion, your vibe, and what matters most to you.
+                Tallee is an AI-powered recommendation app that helps you discover bars, restaurants, stores, and service providers suited to your needs. Tell Tallee what you’re looking for, share your preferences, and search by voice or refine your request as you go. It researches options and matches you with recommendations based on what matters to you.
               </p>
               <p className={styles.paragraph}>
-                Whether it is date night, brunch with friends, a celebration, or a last-minute outing,
-                Tallee helps you skip the endless scrolling and get recommendations that feel curated,
-                not random. Every place also comes with an AI summary, so you can decide faster.
+                Whether you’re planning date night, meeting friends for brunch, shopping for something special, or looking for a service, Tallee helps you skip the endless scrolling. Explore curated recommendations with AI summaries that make it easier to compare and decide. Premium can also remember your preferences and suggest ideas for important dates. Always in the Know.
               </p>
             </div>
           </motion.div>

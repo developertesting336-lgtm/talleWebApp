@@ -83,7 +83,7 @@ const bothPlans: PlanRow[] = [
   { feature: "Searches", free: "15 per month", premium: "Unlimited" },
   { feature: "Basic recommendations", free: true, premium: true },
   { feature: "Save favorites manually", free: true, premium: true },
-  { feature: "Basic history (10–20 venues)", free: true, premium: true },
+  { feature: "Basic history (10–20 Places)", free: true, premium: true },
   { feature: "Session-based memory", free: true, premium: true },
 ];
 
@@ -96,6 +96,8 @@ const premiumOnly: PlanRow[] = [
   { feature: "Multi-profile support", free: false, premium: true },
   { feature: "Sharing favorites and lists", free: false, premium: true },
   { feature: "Invite friends to shared lists", free: false, premium: true },
+  { feature: "Voice search", free: false, premium: true },
+  { feature: "Talk Back", free: false, premium: true }
 ];
 
 function PlanCell({ value, highlight = false }: { value: Cell; highlight?: boolean }) {

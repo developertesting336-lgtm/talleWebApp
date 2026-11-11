@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 const differentiators = [
   "Occasion based suggestions (date night, celebrations, casual hangs, business meetups)",
+  "Hidden gems, not just popular picks: Tallee doesn’t recommend a place just because it’s popular, so you can find great spots that don’t show up on every “top 10” list",
   "Vibe matching based on your mood and preferences",
   "Personalized picks that get better over time",
   "Memory mode, so your favorites and preferences stay saved",
@@ -82,11 +83,9 @@ export default function HomePage() {
             className="pointer-events-none absolute inset-0 -z-10 rounded-[16px] bg-[rgba(0,0,0,0.67)] blur-[10px]"
           />
           <div className="space-y-1">
-            <p>Tallee helps you find the right place, fast.</p>
+            <p>Tallee helps you find the right bars, restaurants, stores, and service providers fast.</p>
             <p>
-              Whether it’s date night, brunch with friends, a solo reset, or a last minute plan, Tallee matches you with
-              venues that fit your vibe. Get personalized recommendations based on the occasion, your preferences, and
-              what you’re in the mood for right now.
+              Whether it’s date night, brunch with friends, a solo reset, or a last-minute plan, Tallee researches options and recommends what fits your vibe. Use voice search, tailor results to your preferences, and get ideas for important dates with reminders that help you plan ahead.
             </p>
             <p>{site.tagline}</p>
           </div>

@@ -123,8 +123,7 @@ function Box({ steps }: { steps: BoxStep[] }) {
                   <p className="font-display text-sm font-bold uppercase tracking-widest text-gold sm:text-xl">Step {s.n}</p>
                   <h2 className="mt-1 font-display text-2xl font-bold leading-tight text-cream sm:text-4xl lg:mt-2 lg:text-5xl">{s.title}</h2>
                   {/* small screens: only the first paragraph, max 3 lines, so the phones get the space */}
-                  <div className="mt-2 space-y-2 text-sm leading-relaxed max-lg:[&>p:first-child]:line-clamp-3 max-lg:[&>p:nth-child(n+2)]:hidden sm:text-base lg:mt-6 lg:space-y-4">
-                    {s.body}
+                  <div className="mt-2 space-y-2 text-sm leading-relaxed sm:text-base lg:mt-6 lg:space-y-4">                    {s.body}
                   </div>
                 </div>
                 <FitBox maxScale={isSmall ? 1.5 : 1} className={i % 2 ? "lg:order-1" : ""}>
