@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { BlogPostDetail } from "@/components/BlogPostDetail";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { PatternBackground } from "@/components/PatternBackground";
-import { StoreButtons } from "@/components/StoreButtons";
-import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { HeroEmblem } from "@/components/HeroEmblem";
+import { PatternBackground } from "@/components/PatternBackground";
 import { ReadyToFindBanner } from "@/components/ReadyToFindBanner";
 import { Reveal } from "@/components/Reveal";
+import { ScrollZoomHero } from "@/components/ScrollZoomHero";
 import { blogPosts, blogPublished, findPost, formatDate, postUrl } from "@/lib/blog";
 
-// Every post is prerendered, and unknown slugs return a real 404 (see the SEO pages).
+// Known sample slugs are prerendered, and dynamic backend post IDs render cleanly.
 export const instant = false;
 
 export function generateStaticParams() {
@@ -20,7 +19,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const post = findPost(slug);
-  if (!post) return {};
+  if (!post) {
+    return {
+      title: "Blog Post",
+      description: "Read stories, guides, and venue tips from the Tallee community.",
+      alternates: { canonical: postUrl(slug) },
+      robots: blogPublished ? undefined : { index: false, follow: false },
+    };
+  }
   return {
     title: post.title,
     description: post.excerpt,
@@ -32,17 +38,21 @@ export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): P
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
   const post = findPost(slug);
-  if (!post) notFound();
+
+  if (!post) {
+    return (
+      <>
+        <BlogPostDetail id={slug} />
+        <ReadyToFindBanner id="post-download" />
+      </>
+    );
+  }
+
   const more = blogPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   return (
     <>
-      <ScrollZoomHero
-        compact
-        background={<PatternBackground />}
-        emblem={<HeroEmblem />}
-        contentClassName="max-w-3xl"
-      >
+      <ScrollZoomHero compact background={<PatternBackground />} emblem={<HeroEmblem />} contentClassName="max-w-3xl">
         <div className="hero-in flex justify-center">
           <Breadcrumbs items={[{ name: "Blog", href: "/blog" }, { name: post.title }]} path={postUrl(slug)} className="text-center" />
         </div>
